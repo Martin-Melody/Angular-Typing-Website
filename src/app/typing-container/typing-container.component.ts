@@ -1,0 +1,157 @@
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  CountdownComponent,
+  CountdownEvent,
+  CountdownTimer,
+} from 'ngx-countdown';
+import { ConnectableObservable, timer } from 'rxjs';
+import { ParagraphService } from '../services/paragraph.service';
+
+@Component({
+  selector: 'app-typing-container',
+  templateUrl: './typing-container.component.html',
+  styleUrls: ['./typing-container.component.css'],
+})
+export class TypingContainerComponent implements OnInit {
+  public paragraphs = [] as any;
+  public charIndex = 0;
+  public mistakes = 0;
+
+  constructor(private _paragraphService: ParagraphService) {}
+
+  @ViewChild('countdown') counter!: CountdownComponent;
+
+  ngOnInit(): void {
+    this.paragraphs = this._paragraphService.getParagraphs();
+    
+  }
+
+  restartGame(){
+    location.reload();
+  }
+
+  initTyping(input: string) {
+    // Get all the characters in the text box and put them in an arry
+    const characters = document.querySelectorAll<HTMLSpanElement>(
+      'span[name="charSpan"]'
+    );
+
+    // Get the cpm element
+    const cpmTag = document.querySelector<HTMLSpanElement>(
+      'span[name="cpmSpan"]'
+    );
+
+    //get input field
+    const intputTag = document.querySelector<HTMLInputElement>(
+      'input[name="textInput"]'
+    );
+
+    //Get wpm element
+    const wpmTag = document.querySelector<HTMLSpanElement>(
+      'span[name="wpmSpan"]'
+    );
+
+    // Get the mistakes element
+    const mistakesTag = document.querySelector<HTMLSpanElement>(
+      'span[name="mistakeSpan"]'
+    );
+
+    // Get the timer element
+
+    // Letting typedChar = the chracter that is entered in the input
+    let typedChar = input.split('')[this.charIndex];
+    if (
+      this.charIndex < characters.length - 1 &&
+      this.counter.left / 1000 > 0
+    ) {
+      // check if it is null
+      if (typedChar == null) {
+        //If it is decrease the index because a backspace has been hit and remove the classes added to the characters
+        this.charIndex--;
+
+        // Check if the word was incorrec and then adds a was-incorrect class;
+        if (characters[this.charIndex].classList.contains('incorrect')) {
+          characters[this.charIndex].classList.remove('incorrect');
+          characters[this.charIndex].classList.add('was-Incorrect');
+        }
+        characters[this.charIndex].classList.remove('correct');
+      } else {
+        // If the correct charactes is entered add the correct class and vise versa for incorrect and increase the mistakes counter
+        if (characters[this.charIndex].textContent === typedChar) {
+          characters[this.charIndex].classList.add('correct');
+        } else {
+          this.mistakes++;
+          characters[this.charIndex].classList.add('incorrect');
+        }
+        // Then incrase the character index and update the mistakes counter if needed.
+        this.charIndex++;
+
+        // This just check to see if the tag is null.
+
+        let wpm = Math.round(
+          ((this.charIndex - this.mistakes) /
+            5 /
+            (60 - this.counter.left / 1000)) *
+            60
+        );
+        if (!mistakesTag || !cpmTag || !wpmTag) {
+          return;
+        } else {
+          mistakesTag.innerHTML = this.mistakes.toString();
+          cpmTag.innerHTML = (this.charIndex - this.mistakes).toString();
+          wpmTag.innerHTML = wpm.toString();
+        }
+      }
+    } else {
+      if (!intputTag) {
+      } else {
+        intputTag.value = '';
+      }
+    }
+
+    // For each character in the array we want to remove the active tag and then just added it to the first character in the array.
+    characters.forEach((span) => span.classList.remove('active'));
+    characters[this.charIndex].classList.add('active');
+  }
+
+  StartCountdown() {
+    this.counter.resume();
+  }
+  notify = '';
+
+  timesUp(e: CountdownEvent) {
+    // Get the cpm element
+    const cpmTag = document.querySelector<HTMLSpanElement>(
+      'span[name="cpmSpan"]'
+    );
+
+    //Get wpm element
+    const wpmTag = document.querySelector<HTMLSpanElement>(
+      'span[name="wpmSpan"]'
+    );
+
+    // Get the mistakes element
+    const mistakesTag = document.querySelector<HTMLSpanElement>(
+      'span[name="mistakeSpan"]'
+    );
+    let wpm = Math.round(
+      ((this.charIndex - this.mistakes) / 5 / (60 - this.counter.left / 1000)) *
+        60
+    );
+    if (!mistakesTag || !cpmTag || !wpmTag) {
+      return;
+    } else {
+      mistakesTag.innerHTML = this.mistakes.toString();
+      cpmTag.innerHTML = (this.charIndex - this.mistakes).toString();
+      wpmTag.innerHTML = wpm.toString();
+    }
+
+    this.notify = e.action.toUpperCase();
+    if (e.action === 'done') {
+    } else {
+      console.log('notify', e);
+    }
+  }
+
+  
+}

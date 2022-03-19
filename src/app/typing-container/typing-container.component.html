@@ -1,0 +1,37 @@
+<div class="wrapper">
+    <div class="content-box">
+
+        <div class="typing-text">
+            <p><span *ngFor="let paragraph of paragraphs" name="charSpan">{{paragraph}}</span></p>
+            <div class="container">
+                <input (input)="initTyping(typingBox.value)" (input)="StartCountdown()" name="textInput" #typingBox
+                    type="text" class="input-field" autofocus>
+            </div>
+        </div>
+        <div class="content">
+            <ul class="result-details">
+                <li class="time">
+                    <p>Time Left:</p>
+                    <span>
+                        <countdown #countdown [config]="{leftTime:60, format:'m:ss',demand: true}"
+                            (event)="timesUp($event)"></countdown>
+                    </span>
+                </li>
+                <li class="Mistake">
+                    <p>Mistakes:</p>
+                    <span name="mistakeSpan">0</span>
+                </li>
+                <li class="WPM">
+                    <p>WPM:</p>
+                    <span name="wpmSpan">0</span>
+                </li>
+                <li class="CPM">
+                    <p>CPM:</p>
+                    <span name="cpmSpan">0</span>
+                </li>
+            </ul>
+            <button (click)="restartGame()">Try Again</button>
+        </div>
+
+    </div>
+</div>
