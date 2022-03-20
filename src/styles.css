@@ -4,15 +4,20 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
+@font-face {
+    font-family: Grotesk;
+    src: url(assets/fotns/SpaceGrotesk-VariableFont_wght.ttf) format('truetype');
+}
 
 :root{
     --bg-Color--: #2f3338;
     --main-color--:#d6d2bc;
     --btn-Transform-Scale:0.97;
     --Correct--:#56964f;
-    --incorrect-Color--:#cb3439;
+    --incorrect-Color--:#ff4a59;
     --incorrect-Background--:#ffc0cb;
     --active--Character--:#8f8e84;
+    --sub-color:#8f8e84;
 }
 
 body{
@@ -28,7 +33,7 @@ body{
     width: 70%;
     padding: 35px;
     margin: 0 auto;
-    background: var(--main-color--);
+    background: var(--bg-Color--);
     border-radius: 10px;
 }
 
@@ -56,6 +61,7 @@ body{
 }
 .typing-text p span{
     position: relative;
+    color: var(--main-color--);
 }
 
 .typing-text p span.active.correct{
@@ -72,7 +78,7 @@ body{
 
 .typing-text p span.incorrect{
     color: var(--incorrect-Color--);
-    background-color: var(--incorrect-Background--);
+    /* background-color: var(--incorrect-Background--); */
     /* outline: 1px solid #fff; */
     border-radius: 4px;
 }
@@ -103,7 +109,6 @@ body{
     display: flex;
     margin-top: 17px;
     padding: 12px 0;
-    border-top: 1px solid #ccc;
     justify-content: space-between;
     align-items: center;
 }
@@ -111,21 +116,17 @@ body{
 .content .result-details{
     display: flex;
     width: calc(100% - 140px);
-    justify-content:space-between;
+    /* justify-content:space-between; */
 }
 
-.content button{
-    border: none;
-    outline: none;
-    width: 105px;
-    padding: 8px 0;
-    color: var(--main-color--);
-    background: var(--bg-Color--) ;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 5px;
-    transition: transform 0.3s ease;
+
+
+.btn-conatiner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 
 .content button:active{
     transform: scale(var(--btn-Transform-Scale));
@@ -138,27 +139,25 @@ body{
     align-items: center;
 }
 
-.result-details li:not(:first-child){
-    padding-left: 22px;
-    border-left: 1px solid #ccc;
+.mat-flat-button{
+    background-color: var(--bg-Color--);
+    color: var(--sub-color);
 }
-    
+.mat-flat-button:hover{
+    color: var(--main-color--);
+}
+
 
 .result-details li span{
     display: block;
     font-size: 20px;
     margin-left: 10px;
+    color: var(--main-color--);
+    font-weight: 500;
 }
 
 .result-details li p {
     font-size: 19px;
-}
-
-.result-details li:not(:first-child) span{
-    font-weight: 500;
-}
-.result-details li b{
-    font-weight: 500;
 }
 
 
@@ -174,4 +173,8 @@ body{
 .container .input-field{
     width: 80%;
     padding: 2px;
+    opacity: 0;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Grotesk};

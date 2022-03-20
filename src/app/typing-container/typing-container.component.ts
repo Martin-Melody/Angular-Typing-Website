@@ -23,14 +23,28 @@ export class TypingContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.paragraphs = this._paragraphService.getParagraphs();
-    
   }
 
-  restartGame(){
+  restartGame() {
     location.reload();
   }
 
-  initTyping(input: string) {
+  focusInput() {
+    //get input field
+    const intputTag = document.querySelector<HTMLInputElement>(
+      'input[name="textInput"]'
+    );
+    intputTag?.focus();
+  }
+
+  random(event:any){
+    console.log(event.target.value)
+  }
+
+  initTyping(InputValue: any) {
+    let input = InputValue.target.value;
+
+    console.log(input);
     // Get all the characters in the text box and put them in an arry
     const characters = document.querySelectorAll<HTMLSpanElement>(
       'span[name="charSpan"]'
@@ -60,10 +74,7 @@ export class TypingContainerComponent implements OnInit {
 
     // Letting typedChar = the chracter that is entered in the input
     let typedChar = input.split('')[this.charIndex];
-    if (
-      this.charIndex < characters.length - 1 &&
-      this.counter.left / 1000 > 0
-    ) {
+    if (this.charIndex < characters.length && this.counter.left / 1000 > 0) {
       // check if it is null
       if (typedChar == null) {
         //If it is decrease the index because a backspace has been hit and remove the classes added to the characters
@@ -94,10 +105,10 @@ export class TypingContainerComponent implements OnInit {
             (60 - this.counter.left / 1000)) *
             60
         );
-        if (!mistakesTag || !cpmTag || !wpmTag) {
+
+        if (!cpmTag || !wpmTag) {
           return;
         } else {
-          mistakesTag.innerHTML = this.mistakes.toString();
           cpmTag.innerHTML = (this.charIndex - this.mistakes).toString();
           wpmTag.innerHTML = wpm.toString();
         }
@@ -107,6 +118,11 @@ export class TypingContainerComponent implements OnInit {
       } else {
         intputTag.value = '';
       }
+    }
+
+    // When you reach the end of the quote the timer stops.
+    if (this.charIndex >= this.paragraphs.length) {
+      this.counter.stop();
     }
 
     // For each character in the array we want to remove the active tag and then just added it to the first character in the array.
@@ -152,6 +168,4 @@ export class TypingContainerComponent implements OnInit {
       console.log('notify', e);
     }
   }
-
-  
 }

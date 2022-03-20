@@ -7,6 +7,8 @@ import { TypingContainerComponent } from './typing-container/typing-container.co
 import { ParagraphsComponent } from './paragraphs/paragraphs.component';
 import { ParagraphService } from './services/paragraph.service';
 import { CountdownModule} from 'ngx-countdown';
+import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { CountdownModule} from 'ngx-countdown';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CountdownModule
+    CountdownModule,
+    MatIconModule,
+    MatButtonModule
   ],
   providers: [ParagraphService],
   bootstrap: [AppComponent]
