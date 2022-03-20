@@ -55,20 +55,23 @@ body{
 }
 
 .typing-text p{
-    font-size:21px;
+    font-size:16px;
     text-align: justify;
     letter-spacing: 1px;
+    padding: 20px;
+    height: auto;
 }
 .typing-text p span{
     position: relative;
-    color: var(--main-color--);
+    color: var(--sub-color);
+    height: 20px;
 }
 
 .typing-text p span.active.correct{
-    color: var(--Correct--);
+    color: var(--main-color--);
 }
 .typing-text p span.correct{
-    color: var(--Correct--);
+    color: var(--main-color--);
 }
 .typing-text p span.was-Incorrect{
     color: lightcoral;
@@ -92,9 +95,9 @@ body{
     position: absolute;
     left: 0;
     bottom: 0;
-    height: 2px;
-    width: 100%;
-    background-color: var(--active--Character--);
+    height: 100%;
+    width: 2px;
+    background-color: orange;
     animation: blink 1s ease-in-out infinite;
 }
 
@@ -177,4 +180,4 @@ body{
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Grotesk};
+body { margin: 0; font-family: Grotesk}

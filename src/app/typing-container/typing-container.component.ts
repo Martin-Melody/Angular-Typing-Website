@@ -83,7 +83,7 @@ export class TypingContainerComponent implements OnInit {
         // Check if the word was incorrec and then adds a was-incorrect class;
         if (characters[this.charIndex].classList.contains('incorrect')) {
           characters[this.charIndex].classList.remove('incorrect');
-          characters[this.charIndex].classList.add('was-Incorrect');
+          // characters[this.charIndex].classList.add('was-Incorrect');
         }
         characters[this.charIndex].classList.remove('correct');
       } else {
