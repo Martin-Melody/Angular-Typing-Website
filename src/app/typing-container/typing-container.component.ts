@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import {
   CountdownComponent,
@@ -7,22 +8,42 @@ import {
 import { ConnectableObservable, timer } from 'rxjs';
 import { ParagraphService } from '../services/paragraph.service';
 
+export class Quote {
+  public quote!: string;
+}
+
+
 @Component({
   selector: 'app-typing-container',
   templateUrl: './typing-container.component.html',
   styleUrls: ['./typing-container.component.css'],
 })
 export class TypingContainerComponent implements OnInit {
+  quote!: Quote[];
+
+  URL: string = 'https://api.quotable.io/random?minLength=100&maxLength=140';
+
   public paragraphs = [] as any;
   public charIndex = 0;
   public mistakes = 0;
 
-  constructor(private _paragraphService: ParagraphService) {}
+  constructor(
+    private _paragraphService: ParagraphService,
+    private httpClient: HttpClient
+  ) {}
 
   @ViewChild('countdown') counter!: CountdownComponent;
 
   ngOnInit(): void {
-    this.paragraphs = this._paragraphService.getParagraphs();
+    this.getQuote();
+  }
+
+  getQuote() {
+    this.httpClient.get<any>(this.URL).subscribe((response) => {
+      this.quote = response;
+      console.log(response);
+      this.paragraphs = response.content.split('');
+    });
   }
 
   restartGame() {
@@ -37,8 +58,8 @@ export class TypingContainerComponent implements OnInit {
     intputTag?.focus();
   }
 
-  random(event:any){
-    console.log(event.target.value)
+  random(event: any) {
+    console.log(event.target.value);
   }
 
   initTyping(InputValue: any) {
@@ -136,32 +157,6 @@ export class TypingContainerComponent implements OnInit {
   notify = '';
 
   timesUp(e: CountdownEvent) {
-    // Get the cpm element
-    const cpmTag = document.querySelector<HTMLSpanElement>(
-      'span[name="cpmSpan"]'
-    );
-
-    //Get wpm element
-    const wpmTag = document.querySelector<HTMLSpanElement>(
-      'span[name="wpmSpan"]'
-    );
-
-    // Get the mistakes element
-    const mistakesTag = document.querySelector<HTMLSpanElement>(
-      'span[name="mistakeSpan"]'
-    );
-    let wpm = Math.round(
-      ((this.charIndex - this.mistakes) / 5 / (60 - this.counter.left / 1000)) *
-        60
-    );
-    if (!mistakesTag || !cpmTag || !wpmTag) {
-      return;
-    } else {
-      mistakesTag.innerHTML = this.mistakes.toString();
-      cpmTag.innerHTML = (this.charIndex - this.mistakes).toString();
-      wpmTag.innerHTML = wpm.toString();
-    }
-
     this.notify = e.action.toUpperCase();
     if (e.action === 'done') {
     } else {

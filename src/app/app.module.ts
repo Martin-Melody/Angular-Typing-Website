@@ -9,6 +9,7 @@ import { ParagraphService } from './services/paragraph.service';
 import { CountdownModule} from 'ngx-countdown';
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MatButtonModule } from "@angular/material/button";
     AppRoutingModule,
     CountdownModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    HttpClientModule
   ],
   providers: [ParagraphService],
   bootstrap: [AppComponent]
