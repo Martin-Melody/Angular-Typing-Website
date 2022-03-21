@@ -2,11 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
 }
 @font-face {
-    font-family: Grotesk;
-    src: url(assets/fotns/SpaceGrotesk-VariableFont_wght.ttf) format('truetype');
+    font-family: roboto mono;
+    src: url(assets/fotns/RobotoMono-VariableFont_wght.ttf) format('truetype');
 }
 
 :root{
@@ -18,6 +17,7 @@
     --incorrect-Background--:#ffc0cb;
     --active--Character--:#8f8e84;
     --sub-color:#8f8e84;
+    --font--:"Roboto Mono","Robtot Mono";
 }
 
 body{
@@ -180,4 +180,6 @@ body{
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Grotesk}
+body { margin: 0; 
+font-family: roboto mono;
+}
