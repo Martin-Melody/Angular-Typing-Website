@@ -10,12 +10,14 @@ import { CountdownModule} from 'ngx-countdown';
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { HttpClientModule } from '@angular/common/http';
+import { TypingResultsComponent } from './typing-results/typing-results.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TypingContainerComponent,
-    ParagraphsComponent
+    ParagraphsComponent,
+    TypingResultsComponent
   ],
   imports: [
     BrowserModule,
