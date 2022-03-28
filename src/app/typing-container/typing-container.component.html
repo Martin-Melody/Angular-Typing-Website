@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div class="content-box">
+    <div *ngIf="!showResults" class="content-box">
         <div class="content">
             <ul class="result-details">
                 <li class="time">
@@ -17,17 +17,26 @@
                 </li>
             </ul>
         </div>
-        <div class="typing-text" (click)="focusInput()" >
+        <div class="typing-text" (click)="focusInput()">
             <p><span *ngFor="let paragraph of paragraphs" name="charSpan">{{paragraph}}</span></p>
             <div class="container">
-                <input   (input)="initTyping($event)" (input)="StartCountdown()" name="textInput" #typingBox
-                    type="text" class="input-field" autofocus>
+                <input (input)="initTyping($event)" (input)="StartCountdown()" name="textInput" #typingBox type="text"
+                    class="input-field" autofocus>
             </div>
         </div>
-        <div class="btn-conatiner">
-            <button  mat-flat-button (click)="restartGame()"><mat-icon>refresh</mat-icon></button>
-        </div>
-
-
     </div>
+    <div *ngIf="showResults">
+        
+        <app-typing-results><p></p></app-typing-results>
+    </div>
+    <div class="btn-conatiner">
+        <button mat-flat-button (click)="restartGame()">
+            <mat-icon>refresh</mat-icon>
+        </button>
+    </div>
+
+
+
+
+
 </div>

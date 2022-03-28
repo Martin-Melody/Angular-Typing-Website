@@ -7,6 +7,7 @@ import {
 } from 'ngx-countdown';
 import { ConnectableObservable, timer } from 'rxjs';
 import { ParagraphService } from '../services/paragraph.service';
+import { SharedService } from "../services/shared.service";
 
 export class Quote {
   public quote!: string;
@@ -21,15 +22,23 @@ export class Quote {
 export class TypingContainerComponent implements OnInit {
   quote!: Quote[];
 
-  URL: string = 'https://api.quotable.io/random?minLength=100&maxLength=140';
+  URL: string = 'https://api.quotable.io/random?minLength=50&maxLength=50';
 
   public paragraphs = [] as any;
   public charIndex = 0;
   public mistakes = 0;
+  public showResults:boolean = false;
+  public accuracy = 0;
+  public tiemLeft = 0;
+  public Author:string = " ";
+  public WPM = 0;
+  public quoteLenght = 0;
+  public mistakeTimeStamp = [{}];
 
   constructor(
     private _paragraphService: ParagraphService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private shared:SharedService
   ) {}
 
   @ViewChild('countdown') counter!: CountdownComponent;
@@ -42,6 +51,9 @@ export class TypingContainerComponent implements OnInit {
     this.httpClient.get<any>(this.URL).subscribe((response) => {
       this.quote = response;
       console.log(response);
+      this.quoteLenght = response.content.length;
+      this.Author = response.author;
+      console.log(this.Author);
       this.paragraphs = response.content.split('');
     });
   }
@@ -113,6 +125,7 @@ export class TypingContainerComponent implements OnInit {
           characters[this.charIndex].classList.add('correct');
         } else {
           this.mistakes++;
+          this.mistakeTimeStamp[this.mistakes] = this.counter.left /1000;
           characters[this.charIndex].classList.add('incorrect');
         }
         // Then incrase the character index and update the mistakes counter if needed.
@@ -132,6 +145,8 @@ export class TypingContainerComponent implements OnInit {
         } else {
           cpmTag.innerHTML = (this.charIndex - this.mistakes).toString();
           wpmTag.innerHTML = wpm.toString();
+          this.WPM = wpm;
+          this.accuracy =  (this.quoteLenght - this.mistakes) / (this.quoteLenght / 100);
         }
       }
     } else {
@@ -144,6 +159,13 @@ export class TypingContainerComponent implements OnInit {
     // When you reach the end of the quote the timer stops.
     if (this.charIndex >= this.paragraphs.length) {
       this.counter.stop();
+      this.tiemLeft = this.counter.left / 1000;
+      // for (let i = 0; i < this.mistakeTimeStamp.length; i++) {
+      //   console.log(this.mistakeTimeStamp[i]);
+        
+      // }
+      this.shared.SetTestResults(this.WPM,this.accuracy,this.tiemLeft,this.Author,this.mistakeTimeStamp);
+      this.showResults = true;
     }
 
     // For each character in the array we want to remove the active tag and then just added it to the first character in the array.
