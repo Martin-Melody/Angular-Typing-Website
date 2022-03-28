@@ -11,13 +11,19 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { HttpClientModule } from '@angular/common/http';
 import { TypingResultsComponent } from './typing-results/typing-results.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
     AppComponent,
     TypingContainerComponent,
     ParagraphsComponent,
-    TypingResultsComponent
+    TypingResultsComponent,
+    MainNavComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,7 +31,11 @@ import { TypingResultsComponent } from './typing-results/typing-results.componen
     CountdownModule,
     MatIconModule,
     MatButtonModule,
-    HttpClientModule
+    HttpClientModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule
   ],
   providers: [ParagraphService],
   bootstrap: [AppComponent]
