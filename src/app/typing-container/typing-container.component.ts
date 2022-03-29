@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
 import {
   CountdownComponent,
   CountdownEvent,
@@ -34,7 +34,11 @@ export class TypingContainerComponent implements OnInit {
   public WPM = 0;
   public quoteLenght = 0;
   public mistakeTimeStamp = [{}];
+  public WPMArray:number[] = [];
+  public raw = 0;
+  public noOfWords = 0;
 
+  @Output() newResultEvent = new EventEmitter<boolean>();
   constructor(
     private _paragraphService: ParagraphService,
     private httpClient: HttpClient,
@@ -55,6 +59,7 @@ export class TypingContainerComponent implements OnInit {
       this.Author = response.author;
       console.log(this.Author);
       this.paragraphs = response.content.split('');
+      this.noOfWords = response.content.split(' ').length;
     });
   }
 
@@ -131,20 +136,24 @@ export class TypingContainerComponent implements OnInit {
         // Then incrase the character index and update the mistakes counter if needed.
         this.charIndex++;
 
-        // This just check to see if the tag is null.
+        // Check to set wpm to zero if calculated number is infinity.
+        let wpm = 0;
+        if (Math.round(((this.charIndex - this.mistakes) /5 /(60 - this.counter.left / 1000)) *60) != Infinity)  {
+          wpm = Math.round(((this.charIndex - this.mistakes) /5 /(60 - this.counter.left / 1000)) *60)
+          this.WPMArray.push(wpm);
+        }
+      
 
-        let wpm = Math.round(
-          ((this.charIndex - this.mistakes) /
-            5 /
-            (60 - this.counter.left / 1000)) *
-            60
-        );
+        
 
         if (!cpmTag || !wpmTag) {
           return;
         } else {
           cpmTag.innerHTML = (this.charIndex - this.mistakes).toString();
+
+          this.raw = Math.round(((this.charIndex + this.mistakes) / 5 /(60 - this.counter.left / 1000)) *60);
           wpmTag.innerHTML = wpm.toString();
+          
           this.WPM = wpm;
           this.accuracy =  (this.quoteLenght - this.mistakes) / (this.quoteLenght / 100);
         }
@@ -160,19 +169,25 @@ export class TypingContainerComponent implements OnInit {
     if (this.charIndex >= this.paragraphs.length) {
       this.counter.stop();
       this.tiemLeft = this.counter.left / 1000;
-      // for (let i = 0; i < this.mistakeTimeStamp.length; i++) {
-      //   console.log(this.mistakeTimeStamp[i]);
-        
-      // }
-      this.shared.SetTestResults(this.WPM,this.accuracy,this.tiemLeft,this.Author,this.mistakeTimeStamp);
-      this.showResults = true;
+
+     
+      
+      this.shared.SetTestResults(this.WPM,this.accuracy,this.tiemLeft,this.Author,this.mistakeTimeStamp, this.raw, this.WPMArray);
+      this.DisplayResult(true);
     }
+
+  
 
     // For each character in the array we want to remove the active tag and then just added it to the first character in the array.
     characters.forEach((span) => span.classList.remove('active'));
     characters[this.charIndex].classList.add('active');
   }
 
+  DisplayResult(value: boolean)
+    {
+      this.showResults = value;
+      this.newResultEvent.emit(this.showResults);
+    }
   StartCountdown() {
     this.counter.resume();
   }

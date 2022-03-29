@@ -1,6 +1,11 @@
+@import '~bootstrap/dist/css/bootstrap';
+
+
+
 *{
     padding: 0;
     box-sizing: border-box;
+    
 }
 @font-face {
     font-family: roboto mono;

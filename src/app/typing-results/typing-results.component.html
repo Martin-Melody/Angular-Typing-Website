@@ -1,13 +1,68 @@
-<p>{{wpm}}</p>
+<!-- <p>{{wpm}}</p>
 <p>{{accuracy}}</p>
 <p>{{timeLeft}}</p>
 <p>{{author}}</p>
 
 <div *ngFor="let timeStamp of MistakeTimeStamp">
     {{timeStamp}}
+</div> -->
+
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h3>WPM</h3>
+                    <h1>{{wpm}}</h1>
+                    <h3>acc</h3>
+                    <h1>{{accuracy}}%</h1>
+                </div>
+                <div class="col chart-container">
+                    <canvas id="Test_Graph"></canvas>
+                </div>
+            </div>
+        </div>
+
+        
+
+    <!-- Info Titles -->
+    <div class="row info">
+        <div class="col">
+            <div class="info-container">
+                <p>Raw</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="info-container">
+                <p>Time</p>
+            </div>
+        </div>
+        <div class="col">
+            <div class="info-container">
+                <p>Author</p>
+            </div>
+        </div>
+        <!-- Info Titles -->
+
+        <!-- Info Results -->
+        <div class="row info">
+            <div class="col">
+                <div class="info-container">
+                    <h3>{{raw}}</h3>
+                </div>
+            </div>
+            <div class="col">
+                <div class="info-container">
+                    <h3>{{timeLeft}}s</h3>
+                </div>
+            </div>
+            <div class="col">
+                <div class="info-container">
+                    <h3 id="author">{{author}}</h3>
+                </div>
+            </div>
+        </div>
+        <!-- Info Results -->
+    </div>
 </div>
-
-
-
-
- 

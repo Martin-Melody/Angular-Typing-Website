@@ -1,0 +1,72 @@
+
+:root{
+     --main-color--:#d6d2bc;
+     --header--:#8f8e84;
+     --result--:#d6d2bc
+}
+
+*{
+    color: var(--main-color--);
+   margin: 0 auto;
+   width: 100%;
+}
+
+.container-fluid{
+  overflow-x: hidden;
+  transition: all 2s;
+  width: 1000px;
+}
+
+
+
+
+.info-container{
+    display: flex;
+    padding: 0;
+}
+
+.info-container p,
+.info-container h4{
+    margin: 0;
+    padding: 0;
+}
+
+.col-sm-4 h3{
+    margin: 0;
+}
+
+.col-sm-4{
+    padding:0;
+}
+
+.chart-container{
+    position: relative;
+    height: 200px;
+    width: 800px !important
+}
+
+#Test_Graph{
+     height: 200px;
+    width: 700px !important
+}
+
+h3{
+    color: var(--header--);
+    font-size: 2rem;
+}
+
+h1{
+    color: var(--result--);
+    font-size: 4rem;
+}
+
+.info{
+    text-align: right;
+    justify-content: right;
+}
+
+#author{
+    font-size: 1rem;
+}
+
+

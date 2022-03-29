@@ -1,5 +1,5 @@
-<div class="wrapper">
-    <div *ngIf="!showResults" class="content-box">
+<div *ngIf="!showResults"  class="wrapper">
+    <div class="content-box">
         <div class="content">
             <ul class="result-details">
                 <li class="time">
@@ -25,18 +25,18 @@
             </div>
         </div>
     </div>
+</div>
+
     <div *ngIf="showResults">
-        
-        <app-typing-results><p></p></app-typing-results>
-    </div>
-    <div class="btn-conatiner">
-        <button mat-flat-button (click)="restartGame()">
-            <mat-icon>refresh</mat-icon>
-        </button>
+        <app-typing-results></app-typing-results>
     </div>
 
-
-
-
-
+<div class="btn-container">
+    <button mat-flat-button (click)="restartGame()">
+        <mat-icon>refresh</mat-icon>
+    </button>
+    <button mat-flat-button>
+        <mat-icon>download</mat-icon>
+    </button>
+ 
 </div>

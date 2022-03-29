@@ -187,3 +187,10 @@ html, body { height: 100%; }
 body { margin: 0; 
 font-family: roboto mono;
 }
+
+.btn-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
