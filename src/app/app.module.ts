@@ -16,6 +16,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { DisplaySavedQuotesComponent } from './display-saved-quotes/display-saved-quotes.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { MatListModule } from '@angular/material/list';
     ParagraphsComponent,
     TypingResultsComponent,
     MainNavComponent,
+    DisplaySavedQuotesComponent,
   ],
   imports: [
     BrowserModule,
