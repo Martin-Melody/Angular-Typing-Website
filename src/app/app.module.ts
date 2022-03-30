@@ -17,7 +17,13 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { DisplaySavedQuotesComponent } from './display-saved-quotes/display-saved-quotes.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { FooterComponent } from './footer/footer.component';
+import { LoginComponent } from './login/login.component';
 
+import { RouterModule, Routes } from "@angular/router";
+
+
+const routes: Routes = [];
 
 @NgModule({
   declarations: [
@@ -27,6 +33,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     TypingResultsComponent,
     DisplaySavedQuotesComponent,
     NavBarComponent,
+    FooterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,7 +46,11 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
     LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+    RouterModule.forRoot(routes)
+  ],
+  exports:[
+    RouterModule
   ],
   providers: [ParagraphService],
   bootstrap: [AppComponent]

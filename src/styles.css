@@ -5,8 +5,10 @@
 *{
     padding: 0;
     box-sizing: border-box;
-    
 }
+
+
+
 @font-face {
     font-family: roboto mono;
     src: url(assets/fotns/RobotoMono-VariableFont_wght.ttf) format('truetype');
@@ -26,9 +28,10 @@
 
 body{
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     justify-content: center;
     /* min-height: 100vh; */
     background: var(--bg-Color--);
 
 }
+
