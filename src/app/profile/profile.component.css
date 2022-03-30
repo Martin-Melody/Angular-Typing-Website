@@ -1,0 +1,80 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.card{
+    width: 100%;
+    height: auto;
+    background-color: var(--bg-Color--);
+    border: 0;    
+    
+
+}
+.row{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    margin: 0;
+    padding: 0;
+}
+
+:root{
+    --bg-Color--: #2f3338;
+    --main-color--:#d6d2bc;
+    --btn-Transform-Scale:0.97;
+    --Correct--:#56964f;
+    --incorrect-Color--:#ff4a59;
+    --incorrect-Background--:#ffc0cb;
+    --active--Character--:#8f8e84;
+    --sub-color:#8f8e84;
+    --font--:"Roboto Mono","Robtot Mono";
+    --footer-height:60px;
+}
+
+
+
+
+
+.container-fluid{
+    width: 99vw;
+    margin: 0;
+    padding: 0;
+}
+
+h3{
+    color: var(--main-color--);
+    font-family: var(--font--);
+}
+
+p{
+    color: var(--main-color--);
+    font-family: var(--font--);
+}
+
+.tab{
+    display: inline-block;
+    margin-left: 30px;
+}
+
+.quote_Container{
+    background:rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.mat-flat-button{
+    background-color: var(--bg-Color--);
+}
+

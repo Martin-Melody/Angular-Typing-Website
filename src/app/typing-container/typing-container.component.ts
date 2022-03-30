@@ -63,8 +63,8 @@ export class TypingContainerComponent implements OnInit {
     });
   }
 
-  restartGame() {
-    location.reload();
+  restartGame():void {
+    window.location.reload();
   }
 
   focusInput() {
