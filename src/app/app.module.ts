@@ -23,7 +23,8 @@ import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from "@angular/router";
 import { NotFoundComponent } from './not-found/not-found.component';
 
-
+//firebase ts
+import { FirebaseTSApp } from "firebasets/firebasetsApp/firebaseTSApp";
 
 // Firebase services + enviorment module
 import { AngularFireModule } from '@angular/fire/compat';
@@ -90,4 +91,10 @@ const routes: Routes = [
   providers: [ParagraphService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+    constructor(){
+      FirebaseTSApp.init(environment.firebase);
+    }
+
+ }
