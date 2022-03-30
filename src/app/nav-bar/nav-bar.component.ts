@@ -7,11 +7,19 @@ import { Router, RouterLink } from '@angular/router';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  constructor(public router:Router) {}
+  constructor(public router: Router) {}
 
   ngOnInit(): void {}
 
-  goToProfile(){
-   this.router.navigate(['./profile']);
+  goToProfile() {
+    this.router.navigate(['./profile']);
+  }
+
+  goToSignOut(){
+    this.router.navigate(['register']);
+  }
+
+  goToSignUp(){
+    this.router.navigate(['login']);
   }
 }

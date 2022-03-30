@@ -18,7 +18,6 @@ import { MatListModule } from '@angular/material/list';
 import { DisplaySavedQuotesComponent } from './display-saved-quotes/display-saved-quotes.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
-import { LoginComponent } from './login/login.component';
 
 import { RouterModule, Routes } from "@angular/router";
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -34,6 +33,8 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { ProfileComponent } from './profile/profile.component';
+import { AuthModule } from './auth/auth.module';
+import { LoginComponent } from './auth/components/login/login.component';
 // Auth service
 // import { AuthService } from './shared/auth.service';
 // Import canActivate guards
@@ -46,7 +47,7 @@ import { ProfileComponent } from './profile/profile.component';
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   // {path:'**', component: NotFoundComponent},
-  {path:'', redirectTo:'/login', pathMatch:'full'},
+  {path:'', redirectTo:'/home', pathMatch:'full'},
   {path: 'home',component: TypingContainerComponent},
   {path: 'profile', component:ProfileComponent}
 
@@ -62,7 +63,6 @@ const routes: Routes = [
     DisplaySavedQuotesComponent,
     NavBarComponent,
     FooterComponent,
-    LoginComponent,
     NotFoundComponent,
     ProfileComponent,
   ],
@@ -83,7 +83,8 @@ const routes: Routes = [
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AuthModule
   ],
   exports:[
     RouterModule

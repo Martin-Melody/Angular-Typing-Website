@@ -73,3 +73,8 @@ input, textarea{
     text-align: center;
     transition: .125s;
 }
+
+p{
+    color: var(--main-color--);
+}
+

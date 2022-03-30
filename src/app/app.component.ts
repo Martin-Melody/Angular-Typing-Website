@@ -13,34 +13,34 @@ export class AppComponent {
   dataRef!:USER;
 
   constructor() {
-    this.firestore = new FirebaseTSFirestore();
-    this.firestore.create({
-      path: ['USERS_COLLECTION',"6"],
-      data: {
-        name:'martin',
-        age:20,
-        quote:'meow mix meow mix please deliever'
-      },
-      onComplete: (docId) => {
-        // alert('Created document' + docId);
-      },
-      onFail: (err) => {
-        alert('Failed to create Document');
-      },
-    });
+    // this.firestore = new FirebaseTSFirestore();
+    // this.firestore.create({
+    //   path: ['USERS_COLLECTION',"6"],
+    //   data: {
+    //     name:'martin',
+    //     age:20,
+    //     quote:'meow mix meow mix please deliever'
+    //   },
+    //   onComplete: (docId) => {
+    //     // alert('Created document' + docId);
+    //   },
+    //   onFail: (err) => {
+    //     alert('Failed to create Document');
+    //   },
+    // });
 
 
-    this.firestore = new FirebaseTSFirestore();
-    this.firestore.getDocument({
-      path: ['USERS_COLLECTION','6'],
-      onComplete: (result) => {
-        this.dataRef = <USER>result.data();
-        console.log(this.dataRef.quote);
-        alert(this.dataRef.name + ' ' + this.dataRef.age + ' '+this.dataRef.quote);
+    // this.firestore = new FirebaseTSFirestore();
+    // this.firestore.getDocument({
+    //   path: ['USERS_COLLECTION','6'],
+    //   onComplete: (result) => {
+    //     this.dataRef = <USER>result.data();
+    //     console.log(this.dataRef.quote);
+    //     alert(this.dataRef.name + ' ' + this.dataRef.age + ' '+this.dataRef.quote);
         
-      },
-      onFail: (err) => {},
-    });
+    //   },
+    //   onFail: (err) => {},
+    // });
     // this.firestore.listenToDocument(
     //   {
     //     name:"USER_LISTENER",
