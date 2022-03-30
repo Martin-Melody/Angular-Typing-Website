@@ -11,12 +11,12 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { HttpClientModule } from '@angular/common/http';
 import { TypingResultsComponent } from './typing-results/typing-results.component';
-import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { DisplaySavedQuotesComponent } from './display-saved-quotes/display-saved-quotes.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 
 @NgModule({
@@ -25,8 +25,8 @@ import { DisplaySavedQuotesComponent } from './display-saved-quotes/display-save
     TypingContainerComponent,
     ParagraphsComponent,
     TypingResultsComponent,
-    MainNavComponent,
     DisplaySavedQuotesComponent,
+    NavBarComponent,
   ],
   imports: [
     BrowserModule,

@@ -23,7 +23,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    /* min-height: 100vh; */
     background: var(--bg-Color--);
 
 }
@@ -31,6 +31,7 @@ body{
 .wrapper{
     width: 90%;
     padding: 35px;
+    padding-top: 200px;
     margin: 0 auto;
     background: var(--bg-Color--);
     border-radius: 10px;

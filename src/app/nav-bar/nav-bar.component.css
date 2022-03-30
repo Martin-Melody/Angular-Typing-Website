@@ -1,0 +1,66 @@
+:root{
+    --bg-Color--: #2f3338;
+    --main-color--:#d6d2bc;
+    --btn-Transform-Scale:0.97;
+    --Correct--:#56964f;
+    --incorrect-Color--:#ff4a59;
+    --incorrect-Background--:#ffc0cb;
+    --active--Character--:#8f8e84;
+    --sub-color:#8f8e84;
+    --font--:"Roboto Mono","Robtot Mono";
+}
+
+.container-fluid{
+    /* border: 1px solid white; */
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.row{
+    /* border: 1px solid red; */
+    width: 100%;
+    height: 40px;
+}
+
+.col, 
+.col-sm-2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px solid orange; */
+}
+
+.right{
+    display: flex;
+    justify-content: right;
+    color: var(--sub-color);
+    font-size: 1rem;
+    line-height: 1rem;
+}
+
+.left_center{
+    display: flex;
+    justify-content: left;
+}
+
+.text{
+    margin: 0;
+    display: flex;
+}
+
+.text p{
+    color: var(--main-color--);
+    margin: 0;
+    font-size: 2rem;
+}
+
+.icon{
+    color: var(--sub-color)
+}
+
+.icon:hover{
+    color: var(--main-color--);
+}
