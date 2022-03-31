@@ -8,14 +8,14 @@ import { Quotes } from "../models/Quote";
 export class ShareSavedQuotesService {
 
 savedQuotes:any;
-quote:any;
+quote: Array<Quotes> = [];
 
   constructor() { }
 
   addQuotes(_author:string,_quote:string,_id:number)
   {
     
-    this.quote= [{author:_author,quote:_quote,id:_id}]
+    this.quote.push({author:_author,quote:_quote,id:_id});
 
     this.savedQuotes =+ this.quote;
   }

@@ -11,17 +11,34 @@ import { Quotes } from '../models/Quote';
 })
 export class ProfileComponent implements OnInit {
   constructor(private sharedQuotes: ShareSavedQuotesService) {}
-  returnedQuote:Quotes;
-  savedQuotes:any;
-  author = '';
-  quote = '';
-  id = 0;
+  returnedQuote:Quotes = {author:'',quote:'',id:0};
+  // savedQuotes:any;
+  savedQuotes:Array<Quotes> = [];
+  
 
   ngOnInit(): void {
-    this.returnedQuote = this.sharedQuotes.getQuotes();
-    console.log(this.returnedQuote);
-    console.log(this.returnedQuote[0].author);
-    console.log('here ' + this.returnedQuote?.author);
+
+    let quoteObj = this.sharedQuotes.getQuotes();
+    for (let i = 0; i < quoteObj.length; i++) {
+      
+      this.savedQuotes.push(quoteObj[i]);
+    }
+    
+
+
+    console.log(this.savedQuotes);
+
+    // this.savedQuotes = this.sharedQuotes.getQuotes();
+    // this.savedQuotes.push(this.sharedQuotes.getQuotes());
+    // this.savedQuotes.push(this.returnedQuote);
+    // this.returnedQuote = this.sharedQuotes.getQuotes();
+    
+    // console.log("saved quotes: "+this.savedQuotes.author);
+    // console.log('here ' + this.savedQuotes.map());
+    // // console.log(this.returnedQuote[0].author);
+    // console.log(this.savedQuotes?.author);
+
+
   }
 
   removeQuote(quoteToRemove: Quotes) {

@@ -9,6 +9,7 @@ import { ConnectableObservable, timer } from 'rxjs';
 import { ParagraphService } from '../services/paragraph.service';
 import { SharedService } from "../services/shared.service";
 import { ShareSavedQuotesService } from "../services/share-saved-quotes.service";
+import { Quotes } from '../models/Quote';
 
 export class Quote {
   public quote!: string;
@@ -65,7 +66,7 @@ export class TypingContainerComponent implements OnInit {
       this.paragraphs = response.content.split('');
       this.noOfWords = response.content.split(' ').length;
       this.Quote = response.content;
-      this.QuoteID = response.id;
+      this.QuoteID = response._id;
     });
   }
 
