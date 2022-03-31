@@ -1,27 +1,31 @@
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-sm-3">
-
-        </div>
-        <div class="col-sm-6">
-            <div class="container">
-                <form #f="ngForm">
-                    <div class="card">
-                        <h1>Sign Up!</h1>
-                        <label for="email">Email</label>
-                        <input name="email" ngModel #email="ngModel" type="email" id="email" required placeholder="email">
-
-                        <label for="password">Password</label>
-                        <input name="password" ngModel #password="ngModel" type="password" id="password" required placeholder="password">
-                        <input name="password" ngModel #password="ngModel" type="password" id="reEnter-Password" required placeholder="reEnter Password">
-
-                        <button class="btn" type="submit" routerLink="../home" (click)="onSubmit(f)" [disabled]="f.invalid">Sign up</button>
-                    </div>
-                </form>
+<div class="displayTable">
+    <div class="displayTableCell">
+        <div class="authBlock">
+            <h3>Sign Up</h3>
+            <div class="formGroup">
+                <input type="email" class="formControl" placeholder="Email Address" #userEmail required />
+            </div>
+            <div class="formGroup">
+                <input type="password" class="formControl" placeholder="Password" #userPwd required />
+            </div>
+            <div class="formGroup">
+                <input type="button" class="btn btnPrimary" value="Sign Up"
+                    (click)="RegisterComponent.SignUp(userEmail.value, userPwd.value)" /> // This could be the problem for later js.
+            </div>
+            <div class="formGroup">
+                <span class="or"><span class="orInner">Or</span></span>
+            </div>
+            <!-- Continue with Google -->
+            <div class="formGroup">
+                <button type="button" class="btn googleBtn" (click)="RegisterComponent.GoogleAuth()">
+                    <i class="fab fa-google-plus-g"></i>
+                    Continue with Google
+                </button>
             </div>
         </div>
-        <div class="col-sm-3">
-
+        <div class="redirectToLogin">
+            <span>Already have an account?
+                <span class="redirect" routerLink="/login">Log In</span></span>
         </div>
     </div>
 </div>

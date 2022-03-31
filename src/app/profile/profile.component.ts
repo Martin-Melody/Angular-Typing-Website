@@ -3,6 +3,7 @@ import { resolve } from 'dns';
 import { timeout } from 'rxjs';
 import { ShareSavedQuotesService } from '../services/share-saved-quotes.service';
 import { Quotes } from '../models/Quote';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,21 +11,24 @@ import { Quotes } from '../models/Quote';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  constructor(private sharedQuotes: ShareSavedQuotesService) {}
-  returnedQuote:Quotes = {author:'',quote:'',id:0};
+  constructor(
+    private sharedQuotes: ShareSavedQuotesService,
+    public ProfileComponent: AuthService
+  ) {}
+  returnedQuote: Quotes = { author: '', quote: '', id: 0 };
   // savedQuotes:any;
-  savedQuotes:Array<Quotes> = [];
-  
+  savedQuotes: Array<Quotes> = [];
+  SavedQuotesEmpty = true;
 
   ngOnInit(): void {
-
     let quoteObj = this.sharedQuotes.getQuotes();
-    for (let i = 0; i < quoteObj.length; i++) {
-      
-      this.savedQuotes.push(quoteObj[i]);
-    }
-    
 
+    if (quoteObj.length !== 0) {
+      for (let i = 0; i < quoteObj.length; i++) {
+        this.savedQuotes.push(quoteObj[i]);
+      }
+      this.SavedQuotesEmpty = false;
+    }
 
     console.log(this.savedQuotes);
 
@@ -32,13 +36,11 @@ export class ProfileComponent implements OnInit {
     // this.savedQuotes.push(this.sharedQuotes.getQuotes());
     // this.savedQuotes.push(this.returnedQuote);
     // this.returnedQuote = this.sharedQuotes.getQuotes();
-    
+
     // console.log("saved quotes: "+this.savedQuotes.author);
     // console.log('here ' + this.savedQuotes.map());
     // // console.log(this.returnedQuote[0].author);
     // console.log(this.savedQuotes?.author);
-
-
   }
 
   removeQuote(quoteToRemove: Quotes) {
@@ -63,5 +65,3 @@ export class ProfileComponent implements OnInit {
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
-

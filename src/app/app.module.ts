@@ -32,9 +32,14 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
+
+
 import { ProfileComponent } from './profile/profile.component';
 import { AuthModule } from './auth/auth.module';
 import { LoginComponent } from './auth/components/login/login.component';
+import { AuthService } from './services/auth.service';
+import { RegisterComponent } from './auth/components/register/register.component';
+import { ResetPasswordComponent } from './auth/components/reset-password/reset-password.component';
 // Auth service
 // import { AuthService } from './shared/auth.service';
 // Import canActivate guards
@@ -45,11 +50,12 @@ import { LoginComponent } from './auth/components/login/login.component';
 
 
 const routes: Routes = [
+  {path:'',redirectTo:'/login', pathMatch:'full'},
   {path: 'login', component: LoginComponent},
-  // {path:'**', component: NotFoundComponent},
-  {path:'', redirectTo:'/home', pathMatch:'full'},
   {path: 'home',component: TypingContainerComponent},
-  {path: 'profile', component:ProfileComponent}
+  {path: 'profile', component:ProfileComponent},
+  {path: 'sign-up', component:RegisterComponent},
+  {path: 'reset-password', component:ResetPasswordComponent}
 
 
 ];
@@ -84,18 +90,12 @@ const routes: Routes = [
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     AppRoutingModule,
-    AuthModule
+    AuthModule,
   ],
   exports:[
     RouterModule
   ],
-  providers: [ParagraphService],
+  providers: [ParagraphService,AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-
-    constructor(){
-      FirebaseTSApp.init(environment.firebase);
-    }
-
- }
+export class AppModule {}

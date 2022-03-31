@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-2 right">
             <div class="text">
-                <a href="index.html">
+                <a routerLink="home">
                     <p>martype</p>
                 </a>
             </div>
@@ -11,7 +11,7 @@
             <button mat-icon-button class="profile_button" (click)="goToProfile()">
                 <mat-icon class="icon">person</mat-icon>
             </button>
-            <button mat-icon-button class="profile_button" (click)="goToSignOut()">
+            <button mat-icon-button class="profile_button" (click)="headerComponent.SignOut()">
                 <mat-icon class="icon">logout</mat-icon>
             </button>
             <button mat-icon-button class="profile_button" (click)="goToSignUp()">

@@ -72,6 +72,12 @@ p{
     margin-bottom: 20px;
     border-radius: 20px;
     padding: 20px;
+    margin-left: 20px;
+
+}
+
+.quote_Container h1{
+    color: var(--main-color--);
 }
 
 .mat-flat-button{

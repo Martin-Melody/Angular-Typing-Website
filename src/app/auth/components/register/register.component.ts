@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthService } from "../../../services/auth.service";
 
 @Component({
   selector: 'app-register',
@@ -7,7 +8,9 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./register.component.css'],
 })
 export class RegisterComponent implements OnInit {
-  constructor() {}
+  constructor(
+    public RegisterComponent: AuthService
+  ) {}
 
   ngOnInit(): void {}
 
