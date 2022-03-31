@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { resolve } from 'dns';
+import { timeout } from 'rxjs';
+import { ShareSavedQuotesService } from '../services/share-saved-quotes.service';
+import { Quotes } from '../models/Quote';
 
 @Component({
   selector: 'app-profile',
@@ -6,17 +10,41 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  savedQuotes : any;
+  constructor(private sharedQuotes: ShareSavedQuotesService) {}
+  returnedQuote:Quotes;
+  savedQuotes:any;
+  author = '';
+  quote = '';
+  id = 0;
 
-  constructor() {
-    this.savedQuotes = [
-    { author: 'shakspear', quote: 'meow mix meow mix please deliver' },
-    { author: 'Nelson Mandela', quote: 'The greatest glory in living lies not in never falling, but in rising every time we fall.' },
-    { author: 'The way to get started is to quit talking and begin doing.', quote: 'Walt Disney' },
-    { author: 'Steve Jobs', quote: "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking." },
-    { author: 'Eleanor Roosevelt', quote: 'If life were predictable it would cease to be life, and be without flavor.' }
-  ];
+  ngOnInit(): void {
+    this.returnedQuote = this.sharedQuotes.getQuotes();
+    console.log(this.returnedQuote);
+    console.log(this.returnedQuote[0].author);
+    console.log('here ' + this.returnedQuote?.author);
   }
 
-  ngOnInit(): void {}
+  removeQuote(quoteToRemove: Quotes) {
+    console.log(this.savedQuotes.length);
+    for (let i = 0; i < this.savedQuotes.length; i++) {
+      if (this.savedQuotes[i].id == quoteToRemove.id) {
+        let card = document.getElementById('card');
+        let quoteContainer = document.getElementsByClassName('quote_Container');
+        let cardConatienr = document.getElementById('container');
+
+        if (quoteContainer.length == 1) {
+          card?.parentElement?.removeChild(card);
+          this.savedQuotes.splice(i, 1);
+        }
+        card?.removeChild(quoteContainer[i]);
+        this.savedQuotes.splice(i, 1);
+      }
+    }
+  }
 }
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+

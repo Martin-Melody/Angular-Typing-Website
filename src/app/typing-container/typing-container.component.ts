@@ -8,6 +8,7 @@ import {
 import { ConnectableObservable, timer } from 'rxjs';
 import { ParagraphService } from '../services/paragraph.service';
 import { SharedService } from "../services/shared.service";
+import { ShareSavedQuotesService } from "../services/share-saved-quotes.service";
 
 export class Quote {
   public quote!: string;
@@ -27,14 +28,16 @@ export class TypingContainerComponent implements OnInit {
   public paragraphs = [] as any;
   public charIndex = 0;
   public mistakes = 0;
-  public showResults:boolean = false;
+  public showResults: boolean = false;
   public accuracy = 0;
   public tiemLeft = 0;
-  public Author:string = " ";
+  public Author: string = ' ';
+  public Quote: string = '';
+  public QuoteID:number = 0;
   public WPM = 0;
   public quoteLenght = 0;
   public mistakeTimeStamp = [{}];
-  public WPMArray:number[] = [];
+  public WPMArray: number[] = [];
   public raw = 0;
   public noOfWords = 0;
 
@@ -42,7 +45,8 @@ export class TypingContainerComponent implements OnInit {
   constructor(
     private _paragraphService: ParagraphService,
     private httpClient: HttpClient,
-    private shared:SharedService
+    private shared: SharedService,
+    private sharedQuote:ShareSavedQuotesService
   ) {}
 
   @ViewChild('countdown') counter!: CountdownComponent;
@@ -60,10 +64,12 @@ export class TypingContainerComponent implements OnInit {
       console.log(this.Author);
       this.paragraphs = response.content.split('');
       this.noOfWords = response.content.split(' ').length;
+      this.Quote = response.content;
+      this.QuoteID = response.id;
     });
   }
 
-  restartGame():void {
+  restartGame(): void {
     window.location.reload();
   }
 
@@ -130,7 +136,7 @@ export class TypingContainerComponent implements OnInit {
           characters[this.charIndex].classList.add('correct');
         } else {
           this.mistakes++;
-          this.mistakeTimeStamp[this.mistakes] = this.counter.left /1000;
+          this.mistakeTimeStamp[this.mistakes] = this.counter.left / 1000;
           characters[this.charIndex].classList.add('incorrect');
         }
         // Then incrase the character index and update the mistakes counter if needed.
@@ -138,24 +144,39 @@ export class TypingContainerComponent implements OnInit {
 
         // Check to set wpm to zero if calculated number is infinity.
         let wpm = 0;
-        if (Math.round(((this.charIndex - this.mistakes) /5 /(60 - this.counter.left / 1000)) *60) != Infinity)  {
-          wpm = Math.round(((this.charIndex - this.mistakes) /5 /(60 - this.counter.left / 1000)) *60)
+        if (
+          Math.round(
+            ((this.charIndex - this.mistakes) /
+              5 /
+              (60 - this.counter.left / 1000)) *
+              60
+          ) != Infinity
+        ) {
+          wpm = Math.round(
+            ((this.charIndex - this.mistakes) /
+              5 /
+              (60 - this.counter.left / 1000)) *
+              60
+          );
           this.WPMArray.push(wpm);
         }
-      
-
-        
 
         if (!cpmTag || !wpmTag) {
           return;
         } else {
           cpmTag.innerHTML = (this.charIndex - this.mistakes).toString();
 
-          this.raw = Math.round(((this.charIndex + this.mistakes) / 5 /(60 - this.counter.left / 1000)) *60);
+          this.raw = Math.round(
+            ((this.charIndex + this.mistakes) /
+              5 /
+              (60 - this.counter.left / 1000)) *
+              60
+          );
           wpmTag.innerHTML = wpm.toString();
-          
+
           this.WPM = wpm;
-          this.accuracy =  (this.quoteLenght - this.mistakes) / (this.quoteLenght / 100);
+          this.accuracy =
+            (this.quoteLenght - this.mistakes) / (this.quoteLenght / 100);
         }
       }
     } else {
@@ -170,24 +191,32 @@ export class TypingContainerComponent implements OnInit {
       this.counter.stop();
       this.tiemLeft = this.counter.left / 1000;
 
-     
-      
-      this.shared.SetTestResults(this.WPM,this.accuracy,this.tiemLeft,this.Author,this.mistakeTimeStamp, this.raw, this.WPMArray);
+      this.shared.SetTestResults(
+        this.WPM,
+        this.accuracy,
+        this.tiemLeft,
+        this.Author,
+        this.mistakeTimeStamp,
+        this.raw,
+        this.WPMArray
+      );
       this.DisplayResult(true);
     }
-
-  
 
     // For each character in the array we want to remove the active tag and then just added it to the first character in the array.
     characters.forEach((span) => span.classList.remove('active'));
     characters[this.charIndex].classList.add('active');
   }
 
-  DisplayResult(value: boolean)
-    {
-      this.showResults = value;
-      this.newResultEvent.emit(this.showResults);
-    }
+  saveQuote()
+  {
+    this.sharedQuote.addQuotes(this.Author,this.Quote,this.QuoteID);
+  }
+
+  DisplayResult(value: boolean) {
+    this.showResults = value;
+    this.newResultEvent.emit(this.showResults);
+  }
   StartCountdown() {
     this.counter.resume();
   }
