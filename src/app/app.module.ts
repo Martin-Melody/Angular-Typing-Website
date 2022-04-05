@@ -40,6 +40,11 @@ import { LoginComponent } from './auth/components/login/login.component';
 import { AuthService } from './services/auth.service';
 import { RegisterComponent } from './auth/components/register/register.component';
 import { ResetPasswordComponent } from './auth/components/reset-password/reset-password.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { SearchComponent } from './search/search.component';
+
 // Auth service
 // import { AuthService } from './shared/auth.service';
 // Import canActivate guards
@@ -71,6 +76,7 @@ const routes: Routes = [
     FooterComponent,
     NotFoundComponent,
     ProfileComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserModule,
@@ -91,6 +97,9 @@ const routes: Routes = [
     AngularFireDatabaseModule,
     AppRoutingModule,
     AuthModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
   ],
   exports:[
     RouterModule
@@ -98,4 +107,8 @@ const routes: Routes = [
   providers: [ParagraphService,AuthService],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule {
+  constructor(){
+    FirebaseTSApp.init(environment.firebase);
+  }
+}

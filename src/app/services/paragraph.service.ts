@@ -33,7 +33,8 @@ export class ParagraphService {
     //   console.log(error);
     // }
 
-      const URL = 'https://api.quotable.io/random?maxLength=100';
+      // const URL = 'https://api.quotable.io/random?maxLength=100';
+      const URL = 'https://api.quotable.io/quotes/KsySq34Vlt3';
         let paragraph;
       // fetch(URL)
       // .then(res => res.json)

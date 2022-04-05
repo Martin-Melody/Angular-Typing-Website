@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FirebaseTSFirestore } from "firebasets/firebasetsFirestore/firebaseTSFirestore";
 
 @Component({
   selector: 'app-root',

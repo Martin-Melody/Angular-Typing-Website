@@ -11,6 +11,9 @@ import { SharedService } from "../services/shared.service";
 import { ShareSavedQuotesService } from "../services/share-saved-quotes.service";
 import { Quotes } from '../models/Quote';
 
+//firebase ts
+import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
+
 export class Quote {
   public quote!: string;
 }
@@ -34,7 +37,8 @@ export class TypingContainerComponent implements OnInit {
   public tiemLeft = 0;
   public Author: string = ' ';
   public Quote: string = '';
-  public QuoteID:number = 0;
+  public QuoteID: string = '';
+  public ActualQuoteID:string = '';
   public WPM = 0;
   public quoteLenght = 0;
   public mistakeTimeStamp = [{}];
@@ -47,7 +51,7 @@ export class TypingContainerComponent implements OnInit {
     private _paragraphService: ParagraphService,
     private httpClient: HttpClient,
     private shared: SharedService,
-    private sharedQuote:ShareSavedQuotesService
+    private sharedQuote: ShareSavedQuotesService
   ) {}
 
   @ViewChild('countdown') counter!: CountdownComponent;
@@ -209,9 +213,8 @@ export class TypingContainerComponent implements OnInit {
     characters[this.charIndex].classList.add('active');
   }
 
-  saveQuote()
-  {
-    this.sharedQuote.addQuotes(this.Author,this.Quote,this.QuoteID);
+  saveQuote() {
+    this.sharedQuote.WriteQuoteToFireStore(this.Author, this.Quote, this.QuoteID);
   }
 
   DisplayResult(value: boolean) {

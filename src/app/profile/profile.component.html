@@ -12,13 +12,15 @@
         <div class="col-sm-8 p-3">
             <div class="container" id="container">
 
-                <div class="card" id="card" *ngIf="!SavedQuotesEmpty else NoSavedQuotes">
+                <!-- <div class="card" id="card" *ngIf="!SavedQuotesEmpty else NoSavedQuotes"> -->
+                <div class="card" id="card">
+
                     <div *ngFor="let quote of savedQuotes" class="quote_Container">
                         <h3>Author:</h3>
-                        <p class="tab">{{quote.author}}</p>
+                        <p class="tab">{{quote.Author}}</p>
 
                         <h3>Quote</h3>
-                        <p class="tab">{{quote.quote}}</p>
+                        <p class="tab">{{quote.Quote}}</p>
                         <div class="bottom_quote_container">
                             <button mat-flat-button (click)="removeQuote(quote)">
                                 <mat-icon [ngStyle]="{'color':'red'}">close</mat-icon>

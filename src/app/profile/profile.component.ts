@@ -15,22 +15,25 @@ export class ProfileComponent implements OnInit {
     private sharedQuotes: ShareSavedQuotesService,
     public ProfileComponent: AuthService
   ) {}
-  returnedQuote: Quotes = { author: '', quote: '', id: 0 };
+  returnedQuote: Quotes = { Author: '', Quote: '',Id: ''};
   // savedQuotes:any;
+  test:any;
   savedQuotes: Array<Quotes> = [];
   SavedQuotesEmpty = true;
 
   ngOnInit(): void {
-    let quoteObj = this.sharedQuotes.getQuotes();
+    this.savedQuotes = this.sharedQuotes.getQuotes();
 
-    if (quoteObj.length !== 0) {
-      for (let i = 0; i < quoteObj.length; i++) {
-        this.savedQuotes.push(quoteObj[i]);
-      }
-      this.SavedQuotesEmpty = false;
-    }
 
     console.log(this.savedQuotes);
+    //   for (let i = 0; i < quoteObj.length; i++) {
+    //     this.savedQuotes.push(quoteObj[i]);
+    //   }
+    //   this.SavedQuotesEmpty = false;
+
+    // console.log(this.savedQuotes);
+
+    // console.log(this.savedQuotes);
 
     // this.savedQuotes = this.sharedQuotes.getQuotes();
     // this.savedQuotes.push(this.sharedQuotes.getQuotes());
@@ -44,9 +47,10 @@ export class ProfileComponent implements OnInit {
   }
 
   removeQuote(quoteToRemove: Quotes) {
-    console.log(this.savedQuotes.length);
+    
+    this.sharedQuotes.DeleteQuoteFromFireStore(quoteToRemove);
     for (let i = 0; i < this.savedQuotes.length; i++) {
-      if (this.savedQuotes[i].id == quoteToRemove.id) {
+      if (this.savedQuotes[i].Author == quoteToRemove.Author) {
         let card = document.getElementById('card');
         let quoteContainer = document.getElementsByClassName('quote_Container');
         let cardConatienr = document.getElementById('container');
@@ -60,8 +64,12 @@ export class ProfileComponent implements OnInit {
       }
     }
   }
+
+  removeAllQuotes(){
+
+  }
+
+  
 }
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+

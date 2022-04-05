@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "martype-c158d"
+  },
+  "targets": {
+    "martype-c158d": {
+      "hosting": {
+        "Angular-Typing-Website": [
+          "martype-c158d"
+        ]
+      }
+    }
   }
 }
