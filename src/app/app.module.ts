@@ -18,6 +18,9 @@ import { MatListModule } from '@angular/material/list';
 import { DisplaySavedQuotesComponent } from './display-saved-quotes/display-saved-quotes.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
+// import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from "@angular/forms";
+
 
 import { RouterModule, Routes } from "@angular/router";
 import { NotFoundComponent } from './not-found/not-found.component';
@@ -100,6 +103,8 @@ const routes: Routes = [
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
+    // ReactiveFormsModule,
+    FormsModule,
   ],
   exports:[
     RouterModule

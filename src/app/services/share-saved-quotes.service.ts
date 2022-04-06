@@ -1,11 +1,12 @@
-import { Quote, ThisReceiver } from '@angular/compiler';
+import { ArrayType, Quote, ThisReceiver } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { Quotes } from '../models/Quote';
 import { FirebaseTSFirestore } from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
 import { documentId } from 'firebase/firestore';
 import { stringify } from 'querystring';
-import { delay } from 'rxjs';
+import { delay, empty } from 'rxjs';
 import { async } from '@firebase/util';
+import { resourceLimits } from 'worker_threads';
 
 @Injectable({
   providedIn: 'root',
@@ -16,15 +17,19 @@ export class ShareSavedQuotesService {
   savedQuotes: any;
   quoteHolder: Array<Quotes> = [];
   quoteToRemoveHolder: Array<Quotes> = [];
+
+  OneQuote:Quotes = {Author:'',Quote:'',Id:''};
+  QuoteHolder: Array<Quotes> = [];
+
   quote: Array<Quotes> = [];
   obj: Array<object> = [];
   objLenght!: number;
   quoteSaved: boolean = false;
-  DocID: any;
+  DocID: Array<string> = [];
   private fireStore?: FirebaseTSFirestore;
   constructor() {}
 
-  WriteQuoteToFireStore(_author: string, _quote: string, _id: string) {
+  WriteQuoteToFireStore(_author: string, _quote: string, _id: string){
     this.fireStore = new FirebaseTSFirestore();
 
     //Get all the Documents from a collection.
@@ -34,7 +39,7 @@ export class ShareSavedQuotesService {
       onComplete: (result) => {
         for (let i = 0; i < result.size; i++) {
           // Add The data to a placeholder Object.
-          this.quoteHolder.push(result.docs[i].data() as Quotes);
+         this.quoteHolder.push(result.docs[i].data() as Quotes);
         }
       },
     });
@@ -79,11 +84,16 @@ export class ShareSavedQuotesService {
 
   // Delete from database.
   DeleteQuoteFromFireStore(quoteToRemove: Quotes) {
+  
+   const a = this.GetDocumentFromFireStore(quoteToRemove);
+   
+setTimeout(() => {
+  
 
-    console.log('Document Id : ' + this.DocID);
+    console.log('Document Id : ' + this.DocID[0]);
     this.fireStore = new FirebaseTSFirestore();
     this.fireStore.delete({
-      path: ['SavedQuotes', this.DocID],
+      path: ['SavedQuotes',this.DocID[0]],
       onComplete: () => {
         alert('Quote Deleted');
       },
@@ -91,13 +101,55 @@ export class ShareSavedQuotesService {
         alert('Quote not Deleted');
       },
     });
-    setTimeout(() => {}, 1050);
+    }, 1000);
   }
 
- 
-  
+  GetDocumentFromFireStore(quoteToRemove:Quotes):string[]{
+
+    this.fireStore = new FirebaseTSFirestore();
+    this.fireStore.getCollection(
+      {
+        path:['SavedQuotes'],
+        where:[],
+        onComplete: (result) => {
+          for (let i = 0; i < result.size; i++) {
+           this.OneQuote = result.docs[i].data() as Quotes; 
+
+           if (this.OneQuote.Id == quoteToRemove.Id) {
+             var random = this.DocID[0] = result.docs[i].id;
+           }
+          }
+        },
+        onFail: (err) => {}
+      }
+    ) 
+    return this.DocID
+  }
+
+ searchForAuthor(author:string):Quotes[]{
+   
+
+   //Get all the Documents from a collection.
+   this.fireStore?.getCollection({
+     path: ['SavedQuotes'],
+     where: [],
+     onComplete: (result) => {
+       for (let i = 0; i < result.size; i++) {
+         this.OneQuote = result.docs[i].data() as Quotes;
+
+         if (this.OneQuote.Author == author) {
+           this.quote.push(this.OneQuote);
+         }
+       }
+     },
+   });
+   setTimeout(() => {}, 1000);
+   return this.quote;
+ }
 
   getQuotes(): Quotes[] {
+
+    this.quote = [];
     this.fireStore = new FirebaseTSFirestore();
 
     //Get all the Documents from a collection.
@@ -115,4 +167,5 @@ export class ShareSavedQuotesService {
     setTimeout(() => {}, 1000);
     return this.quote;
   }
+
 }
